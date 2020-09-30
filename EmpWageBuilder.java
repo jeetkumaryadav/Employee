@@ -1,56 +1,64 @@
-public class EmpWageBuilder{
+public class EmpWageBuilder {
+        public static final int IS_PART_TIME = 2;
+        public static final int IS_FULL_TIME = 1;
 
-	public static final int isFullTime = 2;
-	public static final int isPartTime = 1;
+        private final String company;
+        private final int empRate;
+        private final int noOfDays;
+        private final int maxHrs;
+        private int totalEmpWage;
 
-	private final String company;
-	private final int empRatePerHour;
-	private final int numOfWorkingDays;
-	private final int maxWorkingHours;
-	private int totalEmpWage;
+        public EmpWageBuilder(String company, int empRate, int noOfDays, int maxHrs) {
 
-	public EmpWageBuilder(String company, int empRatePerHour, int numOfWorkingDays, int maxWorkingHours){
-		this.company = company;
-		this.empRatePerHour = empRatePerHour;
-		this.numOfWorkingDays = numOfWorkingDays;
-		this.maxWorkingHours = maxWorkingHours;
-	}
+            this.company = company;
+            this.empRate = empRate;
+            this.noOfDays = noOfDays;
+            this.maxHrs = maxHrs;
+        }
 
-	public void computeEmpWage(){
-		//Variables
-		int empHours = 0; int totalWorkingHours = 0; int totalWorkingDays = 0;
-		//Computation
-		while(totalWorkingHours <=maxWorkingHours &&
-				totalWorkingDays < numOfWorkingDays) {
-			int empCheck = (int) Math.floor(Math.random()*10) % 3;
-			switch(empCheck){
-				case isFullTime:
-					empHours = 8;
-					break;
-				case isPartTime:
-					empHours = 4;
-					break;
-				default :
-					empHours = 0;
-			}
-			totalWorkingDays++;
-			totalWorkingHours += empHours;
-			System.out.println("Day#: " + totalWorkingDays + " Emp Hr: "+ totalWorkingHours);
-		}
-		totalEmpWage = totalWorkingHours*empRatePerHour;
-	}
+        public void computeEmpWage() {
+            // Variables
+            int empHours = 0;
+            int totalWorkingHours = 0;
+            int totalWorkingDays = 0;
 
-	@Override
-	public String toString(){
-		return "Total Emp Wage for Company: "+ company+" is: " + totalEmpWage;
-	}
+            // Computation
+            while (totalWorkingHours <= maxHrs && totalWorkingDays < noOfDays) {
 
-	public static void main(String[] args){
-		EmpWageBuilder Dmart = new EmpWageBuilder("Dmart", 20, 2, 10);
-		EmpWageBuilder Reliance = new EmpWageBuilder("Reliance", 10, 4, 20);
-		Dmart.computeEmpWage();
-		System.out.println(Dmart);
-		Reliance.computeEmpWage();
-		System.out.println(Reliance);
-	}
-}
+                double attendence = Math.floor(Math.random() * 10) % 3;
+                switch ((int) attendence) {
+                    case IS_FULL_TIME:
+                        empHours = 8;
+                        break;
+                    case IS_PART_TIME:
+                        empHours = 4;
+                        break;
+                    default:
+                        empHours = 0;
+                }
+
+                totalWorkingDays++;
+                totalWorkingHours += empHours;
+                System.out.println("Day#:" + totalWorkingDays + " Emp Hr:" + totalWorkingHours);
+            }
+
+            totalEmpWage = totalWorkingHours * empRate;
+        }
+
+        @Override
+        public String toString() {
+            return ("Total Emp Wage for Company " + company + " is: " + totalEmpWage);
+
+        }
+
+        public static void main(String[] args) {
+            System.out.println("Welcome to Employee Wage Computation Program");
+            EmpWageBuilder DMart = new EmpWageBuilder("D-Mart", 20, 2, 10);
+            EmpWageBuilder reliance = new EmpWageBuilder("Reliance", 10, 4, 20);
+            DMart.computeEmpWage();
+            System.out.println(DMart);
+            reliance.computeEmpWage();
+            System.out.println(reliance);
+        }
+
+    }
